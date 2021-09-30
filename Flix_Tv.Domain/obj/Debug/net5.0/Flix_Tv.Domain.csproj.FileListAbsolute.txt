@@ -1,0 +1,15 @@
+D:\Flix_Tv\Flix_Tv\Flix_Tv.Domain\bin\Debug\net5.0\Flix_Tv.Domain.deps.json
+D:\Flix_Tv\Flix_Tv\Flix_Tv.Domain\bin\Debug\net5.0\Flix_Tv.Domain.runtimeconfig.json
+D:\Flix_Tv\Flix_Tv\Flix_Tv.Domain\bin\Debug\net5.0\Flix_Tv.Domain.runtimeconfig.dev.json
+D:\Flix_Tv\Flix_Tv\Flix_Tv.Domain\bin\Debug\net5.0\Flix_Tv.Domain.dll
+D:\Flix_Tv\Flix_Tv\Flix_Tv.Domain\bin\Debug\net5.0\ref\Flix_Tv.Domain.dll
+D:\Flix_Tv\Flix_Tv\Flix_Tv.Domain\bin\Debug\net5.0\Flix_Tv.Domain.pdb
+D:\Flix_Tv\Flix_Tv\Flix_Tv.Domain\obj\Debug\net5.0\Flix_Tv.Domain.csproj.AssemblyReference.cache
+D:\Flix_Tv\Flix_Tv\Flix_Tv.Domain\obj\Debug\net5.0\Flix_Tv.Domain.GeneratedMSBuildEditorConfig.editorconfig
+D:\Flix_Tv\Flix_Tv\Flix_Tv.Domain\obj\Debug\net5.0\Flix_Tv.Domain.AssemblyInfoInputs.cache
+D:\Flix_Tv\Flix_Tv\Flix_Tv.Domain\obj\Debug\net5.0\Flix_Tv.Domain.AssemblyInfo.cs
+D:\Flix_Tv\Flix_Tv\Flix_Tv.Domain\obj\Debug\net5.0\Flix_Tv.Domain.csproj.CoreCompileInputs.cache
+D:\Flix_Tv\Flix_Tv\Flix_Tv.Domain\obj\Debug\net5.0\Flix_Tv.Domain.dll
+D:\Flix_Tv\Flix_Tv\Flix_Tv.Domain\obj\Debug\net5.0\ref\Flix_Tv.Domain.dll
+D:\Flix_Tv\Flix_Tv\Flix_Tv.Domain\obj\Debug\net5.0\Flix_Tv.Domain.pdb
+D:\Flix_Tv\Flix_Tv\Flix_Tv.Domain\obj\Debug\net5.0\Flix_Tv.Domain.genruntimeconfig.cache

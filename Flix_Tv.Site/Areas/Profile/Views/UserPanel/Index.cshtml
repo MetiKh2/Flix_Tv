@@ -1,0 +1,608 @@
+﻿@model Flix_Tv.Application.DTOs.User.Profile.UserProfileDto
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div style="display:none;" class="mfp-content">
+    <form action="/profile/userpanel/createwallet" method="post" id="modal-topup" class="zoom-anim-dialog modal modal--form">
+        <button class="modal__close" type="button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13.41,12l4.3-4.29a1,1,0,1,0-1.42-1.42L12,10.59,7.71,6.29A1,1,0,0,0,6.29,7.71L10.59,12l-4.3,4.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0L12,13.41l4.29,4.3a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42Z"></path></svg></button>
+
+        <h4 class="sign__title">شارژ کردن کیف پول</h4>
+
+        <div class="sign__group sign__group--row">
+            <label class="sign__label">اعتبار فعلی :</label>
+            <span class="sign__value">@Model.WalletRemain تومان</span>
+        </div>
+
+        <div class="sign__group sign__group--row">
+            <label class="sign__label" for="value">انتخاب مبلغ :</label>
+            <select class="sign__select" name="amount" id="value">
+                <option value="50000">50,000 تومان</option>
+                <option value="100000">100,000 تومان</option>
+                <option value="150000">150,000 تومان</option>
+                <option value="200000">200,000 تومان</option>
+                <option value="250000">250,000 تومان</option>
+                <option value="300000">300,000 تومان</option>
+            </select>
+
+            <span class="sign__text sign__text--small">لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ و با استفاده از طراحان گرافیک است.</span>
+        </div>
+
+
+
+        <button class="sign__btn" type="submit">شارژ کردن</button>
+        <button title="Close (Esc)" type="button" class="mfp-close">×</button>
+    </form>
+</div>
+<section class="section section--head">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 col-xl-6">
+                <h1 class="section__title section__title--head">پروفایل</h1>
+            </div>
+
+            <div class="col-12 col-xl-6">
+                <ul class="breadcrumb">
+                    <li class="breadcrumb__item"><a href="index.html">صفحه اصلی</a></li>
+                    <li class="breadcrumb__item breadcrumb__item--active">پروفایل</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="catalog catalog--page">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="profile">
+                    <div class="profile__user">
+                        <div class="profile__avatar">
+                            <img src="~/Users/ThumbImages/04bf42e243c34710b221beb0e652bd5c.jpg" alt="">
+                        </div>
+                        <div class="profile__meta">
+                            <h3>@User.Identity.Name</h3>
+
+                        </div>
+                    </div>
+
+                    <!-- tabs nav -->
+                    <ul class="nav nav-tabs profile__tabs" id="profile__tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#tab-1" role="tab" aria-controls="tab-1" aria-selected="true">پروفایل</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tab-2" role="tab" aria-controls="tab-2" aria-selected="false">مورد علاقه ها</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#tab-3" role="tab" aria-controls="tab-3" aria-selected="false">تنظیمات</a>
+                        </li>
+                    </ul>
+                    <!-- end tabs nav -->
+
+                    <a class="profile__logout" href="/LogOut">
+                        <span>خارج شوید</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4,12a1,1,0,0,0,1,1h7.59l-2.3,2.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0l4-4a1,1,0,0,0,.21-.33,1,1,0,0,0,0-.76,1,1,0,0,0-.21-.33l-4-4a1,1,0,1,0-1.42,1.42L12.59,11H5A1,1,0,0,0,4,12ZM17,2H7A3,3,0,0,0,4,5V8A1,1,0,0,0,6,8V5A1,1,0,0,1,7,4H17a1,1,0,0,1,1,1V19a1,1,0,0,1-1,1H7a1,1,0,0,1-1-1V16a1,1,0,0,0-2,0v3a3,3,0,0,0,3,3H17a3,3,0,0,0,3-3V5A3,3,0,0,0,17,2Z"></path></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- content tabs -->
+        <div class="tab-content">
+            <div class="tab-pane fade show active" id="tab-1" role="tabpanel">
+                <div class="row row--grid">
+                    <!-- stats -->
+                    <div class="col-12 col-sm-6 col-xl-3">
+                        <div class="stats">
+                            <span>اعتبار من <a href="#modal-topup" class="open-modal">افزودن</a></span>
+                            @if (ViewBag.successPay == "true")
+                            {
+                                <span class="text-sm-left" id="successWallet" style="color: #3cd681;"> شارژ کیف پول با موفقیت انجام شد</span>
+                                <script>
+                                    setTimeout(function () {
+                                        $('#successWallet').css('display', 'none');
+                                    }, 4000);
+                                </script>
+
+                            }
+                            @if (ViewBag.successPay == "false")
+                            {
+                                <span class="text-sm-left" id="failWallet" style="color: #ff5151;">شارژ کیف پول با موفقیت انجام نشد</span>
+                                <script>
+                                    setTimeout(function () {
+                                        $('#failWallet').css('display', 'none');
+                                    }, 4000);
+                                </script>
+                            }
+                            <p><b>@Model.WalletRemain.ToString("n0")</b></p>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M6,11a1,1,0,1,0,1,1A1,1,0,0,0,6,11Zm12,0a1,1,0,1,0,1,1A1,1,0,0,0,18,11Zm2-6H4A3,3,0,0,0,1,8v8a3,3,0,0,0,3,3H20a3,3,0,0,0,3-3V8A3,3,0,0,0,20,5Zm1,11a1,1,0,0,1-1,1H4a1,1,0,0,1-1-1V8A1,1,0,0,1,4,7H20a1,1,0,0,1,1,1ZM12,9a3,3,0,1,0,3,3A3,3,0,0,0,12,9Zm0,4a1,1,0,1,1,1-1A1,1,0,0,1,12,13Z"></path></svg>
+                        </div>
+                    </div>
+                    <!-- end stats -->
+                    <!-- stats -->
+                    <div class="col-12 col-sm-6 col-xl-3">
+                        <div class="stats">
+                            @if (Model.LastPlan == null)
+                            {
+                                <span>شما در حال حاضر اشتراکی ندارید</span>
+                                @if (ViewBag.addplan == "true")
+                                {
+                                    <span class="text-sm-left" id="successPlan" style="color: #3cd681;">اشتراک با موفقیت برای شما اعمال شد</span>
+                                    <script>
+                                        setTimeout(function () {
+                                            $('#successPlan').css('display', 'none');
+                                        }, 4000);
+                                    </script>
+                                }
+                                @if (ViewBag.addplan == "false")
+                                {
+                                    <span class="text-sm-left" id="failPlan" style="color: red;">اشتراک  برای شما اعمال نشد</span>
+                                    <script>
+                                        setTimeout(function () {
+                                            $('#failPlan').css('display', 'none');
+                                        }, 4000);
+                                    </script>
+                                }
+                            }
+                            else
+                            {
+                                switch (Model.LastPlan.Title)
+                                {
+                                    case "OneMonth":
+                                        { <span>اشتراک یک ماه</span>
+                                            break;
+                                        }
+                                    case "ThreeMonth":
+                                        { <span>اشتراک سه ماهه</span>
+                                            break;
+                                        }
+                                    case "SixMonth":
+                                        { <span>اشتراک شش ماهه</span>
+                                            break;
+                                        }
+                                    case "TwelveMonth":
+                                        {
+                                            <span>اشتراک یک ساله</span>
+                                            break;
+                                        }
+
+
+                                }
+
+                                @if (ViewBag.addplan == "true")
+                                {
+                                    <span class="text-sm-left" id="successPlan" style="color: #3cd681;">اشتراک با موفقیت برای شما اعمال شد</span>
+                                    <script>
+                                        setTimeout(function () {
+                                            $('#successPlan').css('display', 'none');
+                                        }, 4000);
+                                    </script>
+                                }
+                                @if (ViewBag.addplan == "false")
+                                {
+                                    <span class="text-sm-left" id="failPlan" style="color: red;">اشتراک  برای شما اعمال نشد</span>
+                                    <script>
+                                        setTimeout(function () {
+                                            $('#failPlan').css('display', 'none');
+                                        }, 4000);
+                                    </script>
+                                }
+                                <p>@Model.LastPlan.Amount.ToString("n0") ت <sub>/ تاریخ پایان : @Model.LastPlan.EndDate</sub></p>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9,10a1,1,0,0,0-1,1v2a1,1,0,0,0,2,0V11A1,1,0,0,0,9,10Zm12,1a1,1,0,0,0,1-1V6a1,1,0,0,0-1-1H3A1,1,0,0,0,2,6v4a1,1,0,0,0,1,1,1,1,0,0,1,0,2,1,1,0,0,0-1,1v4a1,1,0,0,0,1,1H21a1,1,0,0,0,1-1V14a1,1,0,0,0-1-1,1,1,0,0,1,0-2ZM20,9.18a3,3,0,0,0,0,5.64V17H10a1,1,0,0,0-2,0H4V14.82A3,3,0,0,0,4,9.18V7H8a1,1,0,0,0,2,0H20Z"></path></svg>
+
+                            }
+                        </div>
+                    </div>
+                    <!-- end stats -->
+                    <!-- stats -->
+                    <div class="col-12 col-sm-6 col-xl-3">
+                        <div class="stats">
+                            <span>نظرات من</span>
+                            <p><a href="#">@Model.CommentCount.ToString("n0")</a></p>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8,11a1,1,0,1,0,1,1A1,1,0,0,0,8,11Zm4,0a1,1,0,1,0,1,1A1,1,0,0,0,12,11Zm4,0a1,1,0,1,0,1,1A1,1,0,0,0,16,11ZM12,2A10,10,0,0,0,2,12a9.89,9.89,0,0,0,2.26,6.33l-2,2a1,1,0,0,0-.21,1.09A1,1,0,0,0,3,22h9A10,10,0,0,0,12,2Zm0,18H5.41l.93-.93a1,1,0,0,0,.3-.71,1,1,0,0,0-.3-.7A8,8,0,1,1,12,20Z"></path></svg>
+                        </div>
+                    </div>
+                    <!-- end stats -->
+                    <!-- stats -->
+                    <div class="col-12 col-sm-6 col-xl-3">
+                        <div class="stats">
+                            <span>امتیازات</span>
+                            <p><a href="#">@Model.RateCount.ToString("n0")</a></p>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22,9.67A1,1,0,0,0,21.14,9l-5.69-.83L12.9,3a1,1,0,0,0-1.8,0L8.55,8.16,2.86,9a1,1,0,0,0-.81.68,1,1,0,0,0,.25,1l4.13,4-1,5.68A1,1,0,0,0,6.9,21.44L12,18.77l5.1,2.67a.93.93,0,0,0,.46.12,1,1,0,0,0,.59-.19,1,1,0,0,0,.4-1l-1-5.68,4.13-4A1,1,0,0,0,22,9.67Zm-6.15,4a1,1,0,0,0-.29.88l.72,4.2-3.76-2a1.06,1.06,0,0,0-.94,0l-3.76,2,.72-4.2a1,1,0,0,0-.29-.88l-3-3,4.21-.61a1,1,0,0,0,.76-.55L12,5.7l1.88,3.82a1,1,0,0,0,.76.55l4.21.61Z"></path></svg>
+                        </div>
+                    </div>
+                    <!-- end stats -->
+                    <!-- dashbox -->
+                    <div class="col-12 col-xl-6">
+                        <div class="dashbox">
+                            <div class="dashbox__title">
+                                <h3><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21,2a1,1,0,0,0-1,1V5H18V3a1,1,0,0,0-2,0V4H8V3A1,1,0,0,0,6,3V5H4V3A1,1,0,0,0,2,3V21a1,1,0,0,0,2,0V19H6v2a1,1,0,0,0,2,0V20h8v1a1,1,0,0,0,2,0V19h2v2a1,1,0,0,0,2,0V3A1,1,0,0,0,21,2ZM6,17H4V15H6Zm0-4H4V11H6ZM6,9H4V7H6Zm10,9H8V13h8Zm0-7H8V6h8Zm4,6H18V15h2Zm0-4H18V11h2Zm0-4H18V7h2Z"></path></svg> فیلم برای شما</h3>
+
+                                <div class="dashbox__wrap">
+                                    <a class="dashbox__refresh" href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21,11a1,1,0,0,0-1,1,8.05,8.05,0,1,1-2.22-5.5h-2.4a1,1,0,0,0,0,2h4.53a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4.77A10,10,0,1,0,22,12,1,1,0,0,0,21,11Z"></path></svg></a>
+                                    <a class="dashbox__more" href="catalog.html">نمایش همه</a>
+                                </div>
+                            </div>
+
+                            <div class="dashbox__table-wrap dashbox__table-wrap--1">
+                                <table class="main__table main__table--dash">
+                                    <thead>
+                                        <tr>
+                                            <th>عنوان</th>
+                                            <th>دسته بندی</th>
+                                            <th>رتبه</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="main__table-text"><a href="#">لورم ایپسوم متن ساختگی</a></div>
+                                            </td>
+                                            <td>
+                                                <div class="main__table-text">فیلم</div>
+                                            </td>
+                                            <td>
+                                                <div class="main__table-text main__table-text--rate"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22,9.67A1,1,0,0,0,21.14,9l-5.69-.83L12.9,3a1,1,0,0,0-1.8,0L8.55,8.16,2.86,9a1,1,0,0,0-.81.68,1,1,0,0,0,.25,1l4.13,4-1,5.68A1,1,0,0,0,6.9,21.44L12,18.77l5.1,2.67a.93.93,0,0,0,.46.12,1,1,0,0,0,.59-.19,1,1,0,0,0,.4-1l-1-5.68,4.13-4A1,1,0,0,0,22,9.67Zm-6.15,4a1,1,0,0,0-.29.88l.72,4.2-3.76-2a1.06,1.06,0,0,0-.94,0l-3.76,2,.72-4.2a1,1,0,0,0-.29-.88l-3-3,4.21-.61a1,1,0,0,0,.76-.55L12,5.7l1.88,3.82a1,1,0,0,0,.76.55l4.21.61Z"></path></svg> 9.2</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="main__table-text"><a href="#">لورم ایپسوم متن ساختگی</a></div>
+                                            </td>
+                                            <td>
+                                                <div class="main__table-text">فیلم</div>
+                                            </td>
+                                            <td>
+                                                <div class="main__table-text main__table-text--rate"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22,9.67A1,1,0,0,0,21.14,9l-5.69-.83L12.9,3a1,1,0,0,0-1.8,0L8.55,8.16,2.86,9a1,1,0,0,0-.81.68,1,1,0,0,0,.25,1l4.13,4-1,5.68A1,1,0,0,0,6.9,21.44L12,18.77l5.1,2.67a.93.93,0,0,0,.46.12,1,1,0,0,0,.59-.19,1,1,0,0,0,.4-1l-1-5.68,4.13-4A1,1,0,0,0,22,9.67Zm-6.15,4a1,1,0,0,0-.29.88l.72,4.2-3.76-2a1.06,1.06,0,0,0-.94,0l-3.76,2,.72-4.2a1,1,0,0,0-.29-.88l-3-3,4.21-.61a1,1,0,0,0,.76-.55L12,5.7l1.88,3.82a1,1,0,0,0,.76.55l4.21.61Z"></path></svg> 9.1</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="main__table-text"><a href="#">لورم ایپسوم متن ساختگی</a></div>
+                                            </td>
+                                            <td>
+                                                <div class="main__table-text">نمایش تلویزیونی</div>
+                                            </td>
+                                            <td>
+                                                <div class="main__table-text main__table-text--rate"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22,9.67A1,1,0,0,0,21.14,9l-5.69-.83L12.9,3a1,1,0,0,0-1.8,0L8.55,8.16,2.86,9a1,1,0,0,0-.81.68,1,1,0,0,0,.25,1l4.13,4-1,5.68A1,1,0,0,0,6.9,21.44L12,18.77l5.1,2.67a.93.93,0,0,0,.46.12,1,1,0,0,0,.59-.19,1,1,0,0,0,.4-1l-1-5.68,4.13-4A1,1,0,0,0,22,9.67Zm-6.15,4a1,1,0,0,0-.29.88l.72,4.2-3.76-2a1.06,1.06,0,0,0-.94,0l-3.76,2,.72-4.2a1,1,0,0,0-.29-.88l-3-3,4.21-.61a1,1,0,0,0,.76-.55L12,5.7l1.88,3.82a1,1,0,0,0,.76.55l4.21.61Z"></path></svg> 9.0</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="main__table-text"><a href="#">لورم ایپسوم متن ساختگی</a></div>
+                                            </td>
+                                            <td>
+                                                <div class="main__table-text">نمایش تلویزیونی</div>
+                                            </td>
+                                            <td>
+                                                <div class="main__table-text main__table-text--rate"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22,9.67A1,1,0,0,0,21.14,9l-5.69-.83L12.9,3a1,1,0,0,0-1.8,0L8.55,8.16,2.86,9a1,1,0,0,0-.81.68,1,1,0,0,0,.25,1l4.13,4-1,5.68A1,1,0,0,0,6.9,21.44L12,18.77l5.1,2.67a.93.93,0,0,0,.46.12,1,1,0,0,0,.59-.19,1,1,0,0,0,.4-1l-1-5.68,4.13-4A1,1,0,0,0,22,9.67Zm-6.15,4a1,1,0,0,0-.29.88l.72,4.2-3.76-2a1.06,1.06,0,0,0-.94,0l-3.76,2,.72-4.2a1,1,0,0,0-.29-.88l-3-3,4.21-.61a1,1,0,0,0,.76-.55L12,5.7l1.88,3.82a1,1,0,0,0,.76.55l4.21.61Z"></path></svg> 8.9</div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="main__table-text"><a href="#">لورم ایپسوم متن ساختگی</a></div>
+                                            </td>
+                                            <td>
+                                                <div class="main__table-text">نمایش تلویزیونی</div>
+                                            </td>
+                                            <td>
+                                                <div class="main__table-text main__table-text--rate"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22,9.67A1,1,0,0,0,21.14,9l-5.69-.83L12.9,3a1,1,0,0,0-1.8,0L8.55,8.16,2.86,9a1,1,0,0,0-.81.68,1,1,0,0,0,.25,1l4.13,4-1,5.68A1,1,0,0,0,6.9,21.44L12,18.77l5.1,2.67a.93.93,0,0,0,.46.12,1,1,0,0,0,.59-.19,1,1,0,0,0,.4-1l-1-5.68,4.13-4A1,1,0,0,0,22,9.67Zm-6.15,4a1,1,0,0,0-.29.88l.72,4.2-3.76-2a1.06,1.06,0,0,0-.94,0l-3.76,2,.72-4.2a1,1,0,0,0-.29-.88l-3-3,4.21-.61a1,1,0,0,0,.76-.55L12,5.7l1.88,3.82a1,1,0,0,0,.76.55l4.21.61Z"></path></svg> 8.9</div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end dashbox -->
+                    <!-- dashbox -->
+                    <div class="col-12 col-xl-6">
+                        <div class="dashbox">
+                            <div class="dashbox__title">
+                                <h3><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22,9.67A1,1,0,0,0,21.14,9l-5.69-.83L12.9,3a1,1,0,0,0-1.8,0L8.55,8.16,2.86,9a1,1,0,0,0-.81.68,1,1,0,0,0,.25,1l4.13,4-1,5.68A1,1,0,0,0,6.9,21.44L12,18.77l5.1,2.67a.93.93,0,0,0,.46.12,1,1,0,0,0,.59-.19,1,1,0,0,0,.4-1l-1-5.68,4.13-4A1,1,0,0,0,22,9.67Zm-6.15,4a1,1,0,0,0-.29.88l.72,4.2-3.76-2a1.06,1.06,0,0,0-.94,0l-3.76,2,.72-4.2a1,1,0,0,0-.29-.88l-3-3,4.21-.61a1,1,0,0,0,.76-.55L12,5.7l1.88,3.82a1,1,0,0,0,.76.55l4.21.61Z"></path></svg> آخرین نظرات</h3>
+
+                                 
+                            </div>
+
+                            <div class="dashbox__table-wrap dashbox__table-wrap--2">
+                                <table class="main__table main__table--dash">
+                                    <thead>
+                                        <tr>
+                                            <th>آیتم</th>
+                                            <th>عنوان</th>
+                                            <th>رتبه</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        @foreach (var item in Model.LastUserComments)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <div class="main__table-text">@item.MediaTitle</div>
+                                                </td>
+                                                <td>
+                                                    <div class="main__table-text">@item.Subject</div>
+                                                </td>
+                                                <td>
+                                                    @if (item.rate != null)
+                                                    {
+                                                        <div class="main__table-text main__table-text--rate"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22,9.67A1,1,0,0,0,21.14,9l-5.69-.83L12.9,3a1,1,0,0,0-1.8,0L8.55,8.16,2.86,9a1,1,0,0,0-.81.68,1,1,0,0,0,.25,1l4.13,4-1,5.68A1,1,0,0,0,6.9,21.44L12,18.77l5.1,2.67a.93.93,0,0,0,.46.12,1,1,0,0,0,.59-.19,1,1,0,0,0,.4-1l-1-5.68,4.13-4A1,1,0,0,0,22,9.67Zm-6.15,4a1,1,0,0,0-.29.88l.72,4.2-3.76-2a1.06,1.06,0,0,0-.94,0l-3.76,2,.72-4.2a1,1,0,0,0-.29-.88l-3-3,4.21-.61a1,1,0,0,0,.76-.55L12,5.7l1.88,3.82a1,1,0,0,0,.76.55l4.21.61Z"></path></svg> @item.rate</div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="main__table-text main__table-text--rate"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22,9.67A1,1,0,0,0,21.14,9l-5.69-.83L12.9,3a1,1,0,0,0-1.8,0L8.55,8.16,2.86,9a1,1,0,0,0-.81.68,1,1,0,0,0,.25,1l4.13,4-1,5.68A1,1,0,0,0,6.9,21.44L12,18.77l5.1,2.67a.93.93,0,0,0,.46.12,1,1,0,0,0,.59-.19,1,1,0,0,0,.4-1l-1-5.68,4.13-4A1,1,0,0,0,22,9.67Zm-6.15,4a1,1,0,0,0-.29.88l.72,4.2-3.76-2a1.06,1.06,0,0,0-.94,0l-3.76,2,.72-4.2a1,1,0,0,0-.29-.88l-3-3,4.21-.61a1,1,0,0,0,.76-.55L12,5.7l1.88,3.82a1,1,0,0,0,.76.55l4.21.61Z"></path></svg>-</div>
+
+                                                    }
+                                                </td>
+                                            </tr>
+
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end dashbox -->
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="tab-2" role="tabpanel">
+                <!-- favorites -->
+                <div class="row row--grid">
+
+                    @foreach (var item in Model.FavoriteMedias)
+                    {
+                        <div class="col-6 col-sm-4 col-lg-3 col-xl-2">
+                            <div class="card card--favorites">
+                                <a href="@((item.IsSerial==true?"/Serial/"+item.Id:"/Movie/"+item.Id))" class="card__cover" style="height:225px;">
+                                    @if (item.IsSerial == true)
+                                    {
+                                        <img src="~/Serials/ThumbImages/@item.Image" alt="" style="height:100%;">
+                                    }
+                                    else
+                                    {
+                                        <img src="~/Movies/ThumbImages/@item.Image" alt="" style="height:100%;">
+                                    }
+                                    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M11 1C16.5228 1 21 5.47716 21 11C21 16.5228 16.5228 21 11 21C5.47716 21 1 16.5228 1 11C1 5.47716 5.47716 1 11 1Z" stroke-linecap="round" stroke-linejoin="round"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M14.0501 11.4669C13.3211 12.2529 11.3371 13.5829 10.3221 14.0099C10.1601 14.0779 9.74711 14.2219 9.65811 14.2239C9.46911 14.2299 9.28711 14.1239 9.19911 13.9539C9.16511 13.8879 9.06511 13.4569 9.03311 13.2649C8.93811 12.6809 8.88911 11.7739 8.89011 10.8619C8.88911 9.90489 8.94211 8.95489 9.04811 8.37689C9.07611 8.22089 9.15811 7.86189 9.18211 7.80389C9.22711 7.69589 9.30911 7.61089 9.40811 7.55789C9.48411 7.51689 9.57111 7.49489 9.65811 7.49789C9.74711 7.49989 10.1091 7.62689 10.2331 7.67589C11.2111 8.05589 13.2801 9.43389 14.0401 10.2439C14.1081 10.3169 14.2951 10.5129 14.3261 10.5529C14.3971 10.6429 14.4321 10.7519 14.4321 10.8619C14.4321 10.9639 14.4011 11.0679 14.3371 11.1549C14.3041 11.1999 14.1131 11.3999 14.0501 11.4669Z" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                                </a>
+                                <button class="card__add" type="button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M16,2H8A3,3,0,0,0,5,5V21a1,1,0,0,0,.5.87,1,1,0,0,0,1,0L12,18.69l5.5,3.18A1,1,0,0,0,18,22a1,1,0,0,0,.5-.13A1,1,0,0,0,19,21V5A3,3,0,0,0,16,2Zm1,17.27-4.5-2.6a1,1,0,0,0-1,0L7,19.27V5A1,1,0,0,1,8,4h8a1,1,0,0,1,1,1Z"></path></svg></button>
+                                <span class="card__rating"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22,9.67A1,1,0,0,0,21.14,9l-5.69-.83L12.9,3a1,1,0,0,0-1.8,0L8.55,8.16,2.86,9a1,1,0,0,0-.81.68,1,1,0,0,0,.25,1l4.13,4-1,5.68A1,1,0,0,0,6.9,21.44L12,18.77l5.1,2.67a.93.93,0,0,0,.46.12,1,1,0,0,0,.59-.19,1,1,0,0,0,.4-1l-1-5.68,4.13-4A1,1,0,0,0,22,9.67Zm-6.15,4a1,1,0,0,0-.29.88l.72,4.2-3.76-2a1.06,1.06,0,0,0-.94,0l-3.76,2,.72-4.2a1,1,0,0,0-.29-.88l-3-3,4.21-.61a1,1,0,0,0,.76-.55L12,5.7l1.88,3.82a1,1,0,0,0,.76.55l4.21.61Z"></path></svg> 8.3</span>
+                                <h3 class="card__title"><a href="@((item.IsSerial==true?"/Serial/"+item.Id:"/Movie/"+item.Id))">@item.Title</a></h3>
+                                <ul class="card__list">
+                                    <li>@((item.IsFree==true?"رایگان":"اشتراکی"))</li>
+                                    <li>@item.FirstCategory</li>
+                                    <li>@item.Year</li>
+                                </ul>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <!-- end favorites -->
+                <!-- paginator -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="catalog__paginator-wrap">
+                            <span class="catalog__pages">12 از 144</span>
+
+                            <ul class="catalog__paginator">
+                                <li>
+                                    <a href="#">
+                                        <svg width="14" height="11" viewBox="0 0 14 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13.1992 5.3645L0.75 5.3645" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M8.17822 0.602051L13.1993 5.36417L8.17822 10.1271" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+
+                                    </a>
+                                </li>
+                                <li class="active"><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li>
+                                    <a href="#">
+                                        <svg width="14" height="11" viewBox="0 0 14 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.75 5.36475L13.1992 5.36475" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M5.771 10.1271L0.749878 5.36496L5.771 0.602051" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!-- end paginator -->
+            </div>
+
+            <div class="tab-pane fade" id="tab-3" role="tabpanel">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="sign__wrap">
+                            <div class="row">
+                                <!-- details form -->
+                                <div class="col-12 col-lg-6">
+                                    <form action="#" method="post" id="form-user-detail" class="sign__form sign__form--profile sign__form--first">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <h4 class="sign__title">جزئیات پروفایل</h4>
+                                            </div>
+
+                                            <div class="col-12 col-md-6 col-lg-12 col-xl-6">
+                                                <div class="sign__group">
+                                                    <label class="sign__label" for="username">نام کاربری </label>
+                                                    <input id="username" type="text" value="@User.Identity.Name" class="sign__input" readonly>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-md-6 col-lg-12 col-xl-6">
+                                                <div class="sign__group">
+                                                    <label class="sign__label" for="email">ایمیل</label>
+                                                    <input id="email" type="email" value="@Model.Email" class="sign__input" readonly>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <div class="sign__group">
+                                                    <label class="sign__label" for="fullname">نام و نام خانوادگی</label>
+                                                    <input onkeydown="fullNameChanged()" id="fullname" type="text" name="fullName" value="@Model.FullName" class="sign__input">
+                                                    <p id="change-fullname-success" class="text-sm-center d-none mt-3" style="color: #1fda7b;">نام و نام خانوادگی با موفقیت تغییر کرد</p>
+                                                    <p id="change-fullname-error" class="text-sm-center d-none mt-3" style="color: #ff5656;">خطایی به وجود آمد</p>
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="col-12">
+                                                <button id="detail-form-submit" class="sign__btn" type="submit" disabled>ذخیره</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- end details form -->
+                                <!-- password form -->
+                                <div class="col-12 col-lg-6">
+                                    <form asp-action="ChangePassword" id="form-change-password" class="sign__form sign__form--profile">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <h4 class="sign__title">تغییر رمز عبور</h4>
+                                            </div>
+
+                                            <div class="col-12 col-md-6 col-lg-12 col-xl-6">
+                                                <div class="sign__group">
+                                                    <label class="sign__label" for="oldpass">رمز قدیمی</label>
+                                                    <input id="curpass" type="password" name="currentPassword" class="sign__input">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-md-6 col-lg-12 col-xl-6">
+                                                <div class="sign__group">
+                                                    <label class="sign__label" for="newpass">رمز جدید</label>
+                                                    <input id="newpass" type="password" name="newPassword" class="sign__input">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12">
+                                                <div class="sign__group">
+                                                    <label class="sign__label" for="confirmpass">تایید رمز</label>
+                                                    <input id="confirmpass" type="password" name="reNewPassword" class="sign__input">
+                                                    @*<p id="wrong-re-password" class="text-sm-center d-none mt-3" style="color: #ff5656;"></p>
+                                                        <p id="wrong-current-password" class="text-sm-center d-none mt-3" style="color: #ff5656;"></p>
+                                                        <p id="input-empty-error" class="text-sm-center d-none mt-3" style="color: #ff5656;"></p>
+                                                        <p id="change-password-error" class="text-sm-center d-none mt-3" style="color: #ff5656;"></p>*@
+
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-12">
+                                                <button class="sign__btn" type="submit">تغییر</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- end password form -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end content tabs -->
+    </div>
+</div>
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="partners owl-carousel">
+                    <a href="#" class="partners__img">
+                        <img src="~/SiteTemplate/img/partners/3docean-light-background.png" alt="">
+                    </a>
+
+                    <a href="#" class="partners__img">
+                        <img src="~/SiteTemplate/img/partners/activeden-light-background.png" alt="">
+                    </a>
+
+                    <a href="#" class="partners__img">
+                        <img src="~/SiteTemplate/img/partners/audiojungle-light-background.png" alt="">
+                    </a>
+
+                    <a href="#" class="partners__img">
+                        <img src="~/SiteTemplate/img/partners/codecanyon-light-background.png" alt="">
+                    </a>
+
+                    <a href="#" class="partners__img">
+                        <img src="~/SiteTemplate/img/partners/photodune-light-background.png" alt="">
+                    </a>
+
+                    <a href="#" class="partners__img">
+                        <img src="~/SiteTemplate/img/partners/themeforest-light-background.png" alt="">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        function fullNameChanged() {
+            $('#detail-form-submit').removeAttr('disabled');
+        }
+
+        $('#form-user-detail').submit(function (e) {
+            e.preventDefault();
+            var fullNameText = $('#fullname').val();
+            $.ajax({
+                type: "POST",
+                url: "/profile/userpanel/ChangeFullName",
+                data: { fullName: fullNameText },
+                dataType: "json",
+                success: function (res) {
+                    if (res == true) {
+                        $('#change-fullname-success').removeClass('d-none');
+                    }
+                    else {
+                        $('#change-fullname-error').removeClass('d-none');
+                    }
+                }
+            });
+        });
+
+        $('#form-change-password').submit(function (e) {
+            e.preventDefault();
+            var newPassword = $('#newpass').val();
+            var confirmPassword = $('#confirmpass').val();
+            var currentPassword = $('#curpass').val();
+            if (newPassword == "" || confirmPassword == "" || currentPassword == "") {
+
+                alert('لطفا تمامی مقادیر را وارد کنید');
+                return;
+            }
+            if (newPassword.length > 16 || newPassword.length < 4) {
+                alert('رمز باید بین 4 تا 16 حرف باشد');
+                return;
+            }
+            if (newPassword != confirmPassword) {
+                alert('رمز عبور و تکرار آن یکسان نیستند');
+                return;
+            }
+
+
+            $.ajax({
+                type: "POST",
+                url: "/profile/userpanel/ChangePassword",
+                data: { currentPassword: currentPassword, newPassword: newPassword, reNewPassword: confirmPassword },
+                dataType: "json",
+                success: function (res) {
+                    if (res == false) {
+                        alert('خطایی به وجود آمده است');
+                    }
+                    if (res == "WrongCurrentPassword") {
+                        alert('رمز عبور قدیمی را اشتباه وارد کردید');
+                    }
+                    if (res == true) {
+                        window.location.href = "/Login?changed=true";
+                    }
+                }
+            });
+        });
+    </script>
+}

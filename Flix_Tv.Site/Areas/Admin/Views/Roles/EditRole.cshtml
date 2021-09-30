@@ -1,0 +1,81 @@
+﻿@model Flix_Tv.Application.DTOs.Roles.Admin.EditRoleDto
+@{
+    ViewData["Title"] = "EditRole";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    List<long> RolePermissions = ViewBag.RolePermissions;
+    List<Flix_Tv.Application.DTOs.Permission.CreateRole.GetPermissionForRolesDto> Permissions = ViewBag.Permissions;
+}
+
+<div class="col-12">
+    <div class="main__title">
+        <h2>ویرایش نقش @Model.LastTitle</h2>
+    </div>
+</div>
+<!-- end main title -->
+<!-- form -->
+<div class="col-12">
+    <form asp-action="EditRole" method="post" class="form" >
+        <input type="hidden" asp-for="LastTitle" />
+        <input type="hidden" asp-for="Id" />
+        
+        <div class="row">
+           
+
+            <div class="col-12 col-md-7 form__content">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form__group">
+                            <input type="text" asp-for="Title" class="form__input" placeholder="نام نقش">
+                            <span asp-validation-for="Title" style="color: #ff8383; margin-top: 8px; display:block;"></span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form__group">
+                            <ul>
+                                @foreach (var item in Permissions.Where(p => p.ParentId == null))
+                                {
+                                    <li>
+                                        <input @((RolePermissions.Any(p=>p==item.Id)?"checked":""))  style="-webkit-appearance: checkbox; " type="checkbox" value="@item.Id" name="selectedPermissions" /> <span style="color:#fff;">@item.Title</span>
+                                        @if (Permissions.Any(p => p.ParentId == item.Id))
+                                        {
+                                            <ul>
+                                                @foreach (var sub1 in Permissions.Where(p => p.ParentId == item.Id))
+                                                {
+                                                    <li>
+                                                        <input @((RolePermissions.Any(p=>p==sub1.Id)?"checked":""))  style=" -webkit-appearance: checkbox; margin-right:10px;" type="checkbox" value="@sub1.Id" name="selectedPermissions" /> <span style="color:#fff;">@sub1.Title</span>
+                                                        @if (Permissions.Any(p => p.ParentId == sub1.Id))
+                                                        {
+                                                            <ul>
+                                                                @foreach (var sub2 in Permissions.Where(p => p.ParentId == sub1.Id))
+                                                                {
+                                                                    <li>
+                                                                        <input @((RolePermissions.Any(p=>p==sub2.Id)?"checked":""))  style=" -webkit-appearance: checkbox; margin-right:20px;" type="checkbox" value="@sub2.Id" name="selectedPermissions" /> <span style="color:#fff;">@sub2.Title</span>
+                                                                    </li>
+                                                                }
+                                                            </ul>
+                                                        }
+                                                    </li>
+                                                }
+                                            </ul>
+                                        }
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="row">
+
+
+                            <div class="col-12">
+                                <button type="submit" class="form__btn">ویرایش</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+    </form>
+</div>
+<!-- end form -->

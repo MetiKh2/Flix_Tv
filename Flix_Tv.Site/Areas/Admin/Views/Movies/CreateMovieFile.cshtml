@@ -1,0 +1,187 @@
+﻿
+@{
+    ViewData["Title"] = "CreateMovieFile";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<style>
+    input[type=radio] {
+        -webkit-appearance: radio;
+    }
+    label{
+        color:#fff;
+    }
+    .custom-file-input {
+        display: inline-block;
+        position: relative;
+        color: #533e00;
+    }
+
+        .custom-file-input input {
+            visibility: hidden;
+            width: 100px;
+        }
+
+        .custom-file-input:before {
+            content: 'Choose File';
+            display: block;
+            background: -webkit-linear-gradient( -180deg, #ffdc73, #febf01);
+            background: -o-linear-gradient( -180deg, #ffdc73, #febf01);
+            background: -moz-linear-gradient( -180deg, #ffdc73, #febf01);
+            background: linear-gradient( -180deg, #ffdc73, #febf01);
+            border: 3px solid #dca602;
+            border-radius: 10px;
+            padding: 5px 0px;
+            outline: none;
+            white-space: nowrap;
+            cursor: pointer;
+            text-shadow: 1px 1px rgba(255,255,255,0.7);
+            font-weight: bold;
+            text-align: center;
+            font-size: 10pt;
+            position: absolute;
+            left: 0;
+            right: 0;
+        }
+
+        .custom-file-input:hover:before {
+            border-color: #febf01;
+        }
+
+        .custom-file-input:active:before {
+            background: #febf01;
+        }
+
+    .file-blue:before {
+        content: 'Browse File';
+        background: -webkit-linear-gradient( -180deg, #99dff5, #02b0e6);
+        background: -o-linear-gradient( -180deg, #99dff5, #02b0e6);
+        background: -moz-linear-gradient( -180deg, #99dff5, #02b0e6);
+        background: linear-gradient( -180deg, #99dff5, #02b0e6);
+        border-color: #57cff4;
+        color: #FFF;
+        text-shadow: 1px 1px rgba(000,000,000,0.5);
+    }
+
+    .file-blue:hover:before {
+        border-color: #02b0e6;
+    }
+
+    .file-blue:active:before {
+        background: #02b0e6;
+    }
+
+</style>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<div class="col-12">
+    <div class="main__title">
+        <h2> افزودن فایل جدید برای @ViewBag.MovieTitle</h2>
+    </div>
+</div>
+<!-- end main title -->
+<!-- form -->
+<div class="col-12">
+    <form action="/Admin/CreateMovieFile" method="post" class="form" enctype="multipart/form-data">
+        <div class="row">
+             
+            <input type="hidden" value="@ViewBag.MovieId" name="movieId"/>
+            <div class="col-12 col-md-7 form__content">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form__group">
+                            <label class="custom-file-input">
+                                <input type="file" name="movieFile">
+                            </label>
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-12">
+                        <div class="form__group">
+                            <label style=" color:#fff; font-weight:600;">کیفیت</label>
+                            <br />
+                            <p>
+                                <input class="w3-radio" type="radio" name="quality" value="Q240" checked>
+                                <label>p240</label>
+                            </p>
+                            <p>
+                                <input class="w3-radio" type="radio" name="quality" value="Q360">
+                                <label>p360</label>
+                            </p>
+                            <p>
+                                <input class="w3-radio" type="radio" name="quality" value="Q480">
+                                <label>p480 </label>
+                            </p>
+                            <p>
+                                <input class="w3-radio" type="radio" name="quality" value="Q720">
+                                <label>p720 </label>
+                            </p>
+                            <p>
+                                <input class="w3-radio" type="radio" name="quality" value="Q1080">
+                                <label>p1080 </label>
+                            </p>
+                            <p>
+                                <input class="w3-radio" type="radio" name="quality" value="Q4k">
+                                <label>4k</label>
+                            </p>
+
+
+                        </div>
+                    </div>
+                    @if (ViewBag.error == true)
+                    {
+                        <p style="color:red; font-weight:600;">تمامی موارد را وارد کنید</p>
+                    }
+                    @if (ViewBag.errorExtension == true)
+
+                    {<p style="color:red; font-weight:600;">پسوند فایل باید mp4 باشد</p>
+
+                    }
+                    @if (ViewBag.Success==true)
+                    {
+                        string moviePathResult = ViewBag.moviePath;
+                <p style="color:green; font-weight:600;">عملیات موفقیت آمیز بود  </p>
+                <script>
+                    setTimeout(function () {
+                        location.href =  '@moviePathResult' ;
+                    }, 2000)
+                </script>
+	}
+
+
+
+                    @*<label style="color:white">تصویر فیلم</label>
+        <div class="col-12 form-group" style="background-color: #151f30; padding:.7rem .2rem; border-radius:6px;">
+            <br />
+            <input asp-for="ImageFile" type="file" id="movie-img" class="form-control" />
+        </div>
+
+        <label style="color:white">تیزر فیلم</label>
+        <div class="col-12 form-group" style="background-color: #151f30; padding:.7rem .2rem; border-radius:6px;">
+            <br />
+            <input asp-for="TiserFile" type="file" class="form-control" />
+            <span asp-validation-for="TiserFile" style="color: #ff8383; margin-top: 8px; display: block;"></span>
+        </div>*@
+
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="col-12">
+                <div class="row">
+
+
+                    <div class="col-12">
+                        <button type="submit" class="form__btn" style="width:100% !important;">افزودن</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- end form -->

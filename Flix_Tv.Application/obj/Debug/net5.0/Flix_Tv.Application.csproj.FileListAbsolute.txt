@@ -1,0 +1,17 @@
+D:\Flix_Tv\Flix_Tv\Flix_Tv.Application\bin\Debug\net5.0\Flix_Tv.Application.deps.json
+D:\Flix_Tv\Flix_Tv\Flix_Tv.Application\bin\Debug\net5.0\Flix_Tv.Application.dll
+D:\Flix_Tv\Flix_Tv\Flix_Tv.Application\bin\Debug\net5.0\ref\Flix_Tv.Application.dll
+D:\Flix_Tv\Flix_Tv\Flix_Tv.Application\bin\Debug\net5.0\Flix_Tv.Application.pdb
+D:\Flix_Tv\Flix_Tv\Flix_Tv.Application\bin\Debug\net5.0\Flix-Tv.Common.dll
+D:\Flix_Tv\Flix_Tv\Flix_Tv.Application\bin\Debug\net5.0\Flix_Tv.Domain.dll
+D:\Flix_Tv\Flix_Tv\Flix_Tv.Application\bin\Debug\net5.0\Flix-Tv.Common.pdb
+D:\Flix_Tv\Flix_Tv\Flix_Tv.Application\bin\Debug\net5.0\Flix_Tv.Domain.pdb
+D:\Flix_Tv\Flix_Tv\Flix_Tv.Application\obj\Debug\net5.0\Flix_Tv.Application.csproj.AssemblyReference.cache
+D:\Flix_Tv\Flix_Tv\Flix_Tv.Application\obj\Debug\net5.0\Flix_Tv.Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\Flix_Tv\Flix_Tv\Flix_Tv.Application\obj\Debug\net5.0\Flix_Tv.Application.AssemblyInfoInputs.cache
+D:\Flix_Tv\Flix_Tv\Flix_Tv.Application\obj\Debug\net5.0\Flix_Tv.Application.AssemblyInfo.cs
+D:\Flix_Tv\Flix_Tv\Flix_Tv.Application\obj\Debug\net5.0\Flix_Tv.Application.csproj.CoreCompileInputs.cache
+D:\Flix_Tv\Flix_Tv\Flix_Tv.Application\obj\Debug\net5.0\Flix_Tv.Application.csproj.CopyComplete
+D:\Flix_Tv\Flix_Tv\Flix_Tv.Application\obj\Debug\net5.0\Flix_Tv.Application.dll
+D:\Flix_Tv\Flix_Tv\Flix_Tv.Application\obj\Debug\net5.0\ref\Flix_Tv.Application.dll
+D:\Flix_Tv\Flix_Tv\Flix_Tv.Application\obj\Debug\net5.0\Flix_Tv.Application.pdb

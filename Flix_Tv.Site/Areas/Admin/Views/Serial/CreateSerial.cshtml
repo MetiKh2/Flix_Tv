@@ -1,0 +1,153 @@
+﻿@model Flix_Tv.Application.DTOs.Serial.Admin.CreateSerialDto
+@{
+    ViewData["Title"] = "CreateSerial";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    List<Flix_Tv.Application.DTOs.SerialCategory.Admin.Serials.GetSerialCategoriesForAdd_EditSerialsDto> SerialCategories = ViewBag.SerialCategories;
+}
+
+<div class="col-12">
+    <div class="main__title">
+        <h2>افزودن سریال جدید</h2>
+    </div>
+</div>
+<!-- end main title -->
+<!-- form -->
+<div class="col-12">
+    <form asp-action="CreateSerial" method="post" class="form" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-12 col-md-5 form__cover">
+                <div class="row">
+                    <div class="col-12 col-sm-6 col-md-12">
+                        <div class="form__img">
+                            <img id="form__img" src="#" alt=" ">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-7 form__content">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form__group">
+                            <input type="text" asp-for="Title" class="form__input" placeholder="عنوان">
+                            <span asp-validation-for="Title" style="color: #ff8383; margin-top: 8px; display:block;"></span>
+                        </div>
+                    </div>
+
+
+                    <div class="col-12">
+                        <div class="form__group">
+                            <input type="text" asp-for="Director" class="form__input" placeholder="کارگردن">
+                            <span asp-validation-for="Director" style="color: #ff8383; margin-top: 8px; display:block;"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form__group">
+                            <input type="number" class="form__input" asp-for="AgeRestriction" placeholder="محدودیت سنی">
+                            <span asp-validation-for="AgeRestriction" style="color: #ff8383; margin-top: 8px; display: block;"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form__group">
+                            <input type="number" class="form__input" asp-for="YearOfCreateDate" placeholder="سال ساخت ">
+                            <span asp-validation-for="YearOfCreateDate" style="color: #ff8383; margin-top: 8px; display: block;"></span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form__group">
+                            <label style="color:#fff;">رایگان ؟</label>
+                            <input type="checkbox" asp-for="IsFree" class="form-check-input" id="materialInline1">
+                            <br />
+
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form__group">
+                            <input type="text" asp-for="Tag" class="form__input" placeholder="برچسب ها (با / از هم جدا شوند) ">
+                            <span asp-validation-for="Tag" style="color: #ff8383; margin-top: 8px; display: block;"></span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form__group">
+                            <label style="color:#fff;">شرح</label>
+                            <textarea asp-for="Description" class="form__input" rows="6" cols="10"></textarea>
+                            <span asp-validation-for="Description" style="color: #ff8383; margin-top: 8px; display: block;"></span>
+                        </div>
+                    </div>
+
+
+
+
+                    <label style="color:white">تصویر فیلم</label>
+                    <div class="col-12 form-group" style="background-color: #151f30; padding:.7rem .2rem; border-radius:6px;">
+                        <br />
+                        <input asp-for="Image" type="file" id="movie-img" class="form-control" />
+                    </div>
+
+                    <label style="color:white">تیزر فیلم</label>
+                    <div class="col-12 form-group" style="background-color: #151f30; padding:.7rem .2rem; border-radius:6px;">
+                        <br />
+                        <input asp-for="Tiser" type="file" class="form-control" />
+                        <span asp-validation-for="Tiser" style="color: #ff8383; margin-top: 8px; display: block;"></span>
+                    </div>
+
+
+                    <div class="col-12 my-3">
+                        <div class="form-check form-check-inline">
+                            <label class="form-check-label text-white" for="materialInline1" style="font-weight:600;">ژانر ها</label>
+                            <br />
+                            @foreach (var item in SerialCategories)
+                            {
+                                <input name="selectedSerialCategories" type="checkbox" value="@item.Id" class="form-check-input" id="materialInline1"> <span style="color:white;">@item.Title</span>
+                                <br />
+                            }
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+
+            <div class="col-12">
+                <div class="row">
+
+
+                    <div class="col-12">
+                        <button type="submit" class="form__btn" style="width:100% !important;">افزودن</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- end form -->
+
+
+@section Scripts
+{
+    <script>
+        function readURL(input) {
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $('#form__img').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#movie-img").change(function() {
+            readURL(this);
+        });
+    </script>
+    <partial name="_ValidationScriptsPartial" />
+}
+

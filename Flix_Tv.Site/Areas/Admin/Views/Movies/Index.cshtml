@@ -1,0 +1,292 @@
+﻿@model Tuple<List<Flix_Tv.Application.DTOs.Movie.Admin.GetMoviesInAdminDto>,int,int>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="col-12">
+    <div class="main__title">
+        <h2>فیلم ها</h2>
+
+        <span class="main__title-stat">تعداد @Model.Item3.ToString("n0")</span>
+
+        <div class="main__title-wrap">
+            <a class="btn btn-info ml-4" href="/Admin/CreateMovie">افزودن فیلم جدید</a>
+            <!-- filter sort -->
+            <div class="filter" id="filter__sort">
+                <span class="filter__item-label">مرتب بر اساس :</span>
+
+                @if (ViewBag.sort == "date")
+                {
+                    <div class="filter__item-btn dropdown-toggle" role="navigation" id="filter-sort" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <input type="button" value="تاریخ ایجاد شده">
+                        <span></span>
+                    </div>
+                }
+                @if (ViewBag.sort == "rate")
+                {
+                    <div class="filter__item-btn dropdown-toggle" role="navigation" id="filter-sort" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <input type="button" value="امتیاز">
+                        <span></span>
+                    </div>
+                }
+                @if (ViewBag.sort == "viewCount")
+                {
+                    <div class="filter__item-btn dropdown-toggle" role="navigation" id="filter-sort" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <input type="button" value="بازدید">
+                        <span></span>
+                    </div>
+                }
+
+                <ul id="sort-list" class="filter__item-menu dropdown-menu scrollbar-dropdown" aria-labelledby="filter-sort" style="">
+                    <li data="date" data-value="تاریخ ایجاد شده">تاریخ ایجاد شده</li>
+                    <li data="rate" data-value="رتبه">امتیاز</li>
+                    <li data="viewCount" data-value="بازدید">بازدید</li>
+                </ul>
+            </div>
+            <!-- end filter sort -->
+            <!-- search -->
+            <form action="/Admin/Movies" class="main__title-form">
+                <input name="filter" value="@ViewBag.filter" id="filter" type="text" placeholder="دنبال فیلم / سریال تلویزیونی ..">
+                <button type="submit">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8.25998" cy="8.25995" r="7.48191" stroke="#2F80ED" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></circle><path d="M13.4637 13.8523L16.3971 16.778" stroke="#2F80ED" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                </button>
+            </form>
+            <!-- end search -->
+        </div>
+    </div>
+</div>
+
+<div class="col-12">
+    <div class="main__table-wrap">
+        <table class="main__table">
+            <thead>
+                <tr>
+
+                    <th>تصویر</th>
+                    <th>عنوان</th>
+                    <th>کارگردان</th>
+                    <th>سال ساخت</th>
+                    <th>زمان</th>
+                    <th>بازدید</th>
+                    <th>محدودیت سنی</th>
+                    <th>امتیاز </th>
+                    <th>تاریخ ایجاد شده</th>
+                    <th>رایگان است؟</th>
+                    <th>در اسلایدر است؟</th>
+                    <th>وضعیت</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model.Item1)
+                {
+                <tr>
+                    <td>
+                        <div class="main__user">
+                            <div class="main__avatar">
+                                <img src="~/Movies/ThumbImages/@item.ImageSrc" alt="">
+                            </div>
+
+                        </div>
+                    </td>
+                    <td>
+                        <div class="main__table-text"><a href="#">@item.Title</a></div>
+                    </td>
+                    <td>
+                        <div class="main__table-text"><a href="#">@((item.Director!=null?item.Director:"-"))</a></div>
+                    </td>
+                    <td>
+                        <div class="main__table-text"><a href="#">@item.YearOfCreateDate</a></div>
+                    </td>
+                    <td>
+                        <div class="main__table-text"><a href="#">@item.Time</a></div>
+                    </td>
+                    @*<td>
+            <div class="main__table-text main__table-text--rate"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22,9.67A1,1,0,0,0,21.14,9l-5.69-.83L12.9,3a1,1,0,0,0-1.8,0L8.55,8.16,2.86,9a1,1,0,0,0-.81.68,1,1,0,0,0,.25,1l4.13,4-1,5.68A1,1,0,0,0,6.9,21.44L12,18.77l5.1,2.67a.93.93,0,0,0,.46.12,1,1,0,0,0,.59-.19,1,1,0,0,0,.4-1l-1-5.68,4.13-4A1,1,0,0,0,22,9.67Zm-6.15,4a1,1,0,0,0-.29.88l.72,4.2-3.76-2a1.06,1.06,0,0,0-.94,0l-3.76,2,.72-4.2a1,1,0,0,0-.29-.88l-3-3,4.21-.61a1,1,0,0,0,.76-.55L12,5.7l1.88,3.82a1,1,0,0,0,.76.55l4.21.61Z"></path></svg> 7.9</div>
+        </td>*@
+                    <td>
+                        <div class="main__table-text">@((item.ViewCount==null?"0":item.ViewCount))</div>
+                    </td>
+                    <td>
+                        <div class="main__table-text">@item.AgeRestriction</div>
+                    </td>
+                    <td>
+                        <div class="main__table-text">@item.AvvrageRate</div>
+                    </td>
+                    @*<td>
+            <div class="main__table-text main__table-text--green">قابل رویت</div>
+        </td>*@
+                    <td>
+                        <div class="main__table-text"> @item.CreateDate</div>
+                    </td>
+                    <td>
+                        @if (item.IsFree)
+                        {
+                            <div class="main__table-text main__table-text--green">رایگان است </div>
+                        }
+                        else
+                        {
+                            <div class="main__table-text main__table-text--red">رایگان نیست </div>
+                        }
+                    </td>
+                    <td id="movie-@item.Id-IsSlider">
+                        @if (item.IsSlider)
+                        {
+                            <div class="main__table-text main__table-text--green">در اسلایدر است </div>
+                        }
+                        else
+                        {
+                            <div class="main__table-text main__table-text--red">در اسلایدر نیست </div>
+                        }
+                    </td>
+                    <td id="movie-@item.Id-status">
+                        @if (item.IsActive)
+                        {
+                            <div class="main__table-text main__table-text--green">فعال است </div>
+                        }
+                        else
+                        {
+                            <div class="main__table-text main__table-text--red">غیر فعال نیست </div>
+                        }
+                    </td>
+                    <td>
+                        <div class="main__table-btns">
+                            <a href="/Admin/CreateMovieFile/@item.Id" class="main__table-btn main__table-btn--banned opend-modal">
+                                <i class="fa fa-file" style="color:green;"></i>
+                            </a>
+                            <button onclick="ChangeIsSlider(@item.Id)" class="main__table-btn main__table-btn--banned opend-modal">
+                                <i class="fa fa-sliders" style="color:yellowgreen;"></i>
+                            </button>
+                            <a href="/admin/movieComments/@item.Id" class="main__table-btn main__table-btn--banned opend-mondal">
+                                <i class="fa fa-comment" style="color: #b38768;"></i>
+                            </a>
+                            <button onclick="ChengeMovieActivate(@item.Id)" class="main__table-btn main__table-btn--view">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.92,11.6C19.9,6.91,16.1,4,12,4S4.1,6.91,2.08,11.6a1,1,0,0,0,0,.8C4.1,17.09,7.9,20,12,20s7.9-2.91,9.92-7.6A1,1,0,0,0,21.92,11.6ZM12,18c-3.17,0-6.17-2.29-7.9-6C5.83,8.29,8.83,6,12,6s6.17,2.29,7.9,6C18.17,15.71,15.17,18,12,18ZM12,8a4,4,0,1,0,4,4A4,4,0,0,0,12,8Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,14Z"></path></svg>
+                            </button>
+                            <a href="/Admin/EditMovie/@item.Id" class="main__table-btn main__table-btn--edit">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22,7.24a1,1,0,0,0-.29-.71L17.47,2.29A1,1,0,0,0,16.76,2a1,1,0,0,0-.71.29L13.22,5.12h0L2.29,16.05a1,1,0,0,0-.29.71V21a1,1,0,0,0,1,1H7.24A1,1,0,0,0,8,21.71L18.87,10.78h0L21.71,8a1.19,1.19,0,0,0,.22-.33,1,1,0,0,0,0-.24.7.7,0,0,0,0-.14ZM6.83,20H4V17.17l9.93-9.93,2.83,2.83ZM18.17,8.66,15.34,5.83l1.42-1.41,2.82,2.82Z"></path></svg>
+                            </a>
+                            <button style="cursor:pointer;" onclick="DeleteMovie(@item.Id)" class="main__table-btn main__table-btn--delete odpen-modal">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10,18a1,1,0,0,0,1-1V11a1,1,0,0,0-2,0v6A1,1,0,0,0,10,18ZM20,6H16V5a3,3,0,0,0-3-3H11A3,3,0,0,0,8,5V6H4A1,1,0,0,0,4,8H5V19a3,3,0,0,0,3,3h8a3,3,0,0,0,3-3V8h1a1,1,0,0,0,0-2ZM10,5a1,1,0,0,1,1-1h2a1,1,0,0,1,1,1V6H10Zm7,14a1,1,0,0,1-1,1H8a1,1,0,0,1-1-1V8H17Zm-3-1a1,1,0,0,0,1-1V11a1,1,0,0,0-2,0v6A1,1,0,0,0,14,18Z"></path></svg>
+                            </button>
+                            <a href="/Admin/getMovieFile/@item.Id?quality=240" class="main__table-btn main__table-btn--banned opend-modal">
+                                <p class="text-sm-center" style="color:gold;">240p</p>
+                            </a>
+                            <a href="/Admin/getMovieFile/@item.Id?quality=360" class="main__table-btn main__table-btn--banned opend-modal">
+                                <p class="text-sm-center" style="color:gold;">360p</p>
+                            </a>
+                            <a href="/Admin/getMovieFile/@item.Id?quality=480" class="main__table-btn main__table-btn--banned opend-modal">
+                                <p class="text-sm-center" style="color:gold;">480p</p>
+                            </a>
+                            <a href="/Admin/getMovieFile/@item.Id?quality=720" class="main__table-btn main__table-btn--banned opend-modal">
+                                <p class="text-sm-center" style="color:gold;">720p</p>
+                            </a>
+                            <a href="/Admin/getMovieFile/@item.Id?quality=1080" class="main__table-btn main__table-btn--banned opend-modal">
+                                <p class="text-sm-center" style="color:gold;">1080p</p>
+                            </a>
+                            <a href="/Admin/getMovieFile/@item.Id?quality=4000" class="main__table-btn main__table-btn--banned opend-modal">
+                                <p class="text-sm-center" style="color:gold;">4k</p>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="col-12">
+    <div class="paginator">
+        <span class="paginator__pages">10 از 14,452</span>
+
+        <ul class="paginator__paginator">
+            @if (ViewBag.pageId > 1)
+            {
+                <li>
+                    <a href="/Admin/Movies?filter=@ViewBag.filter&sort=@ViewBag.sort&pageId=@(ViewBag.pageId-1)">
+                        <svg width="14" height="11" viewBox="0 0 14 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13.1992 5.3645L0.75 5.3645" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M8.17822 0.602051L13.1993 5.36417L8.17822 10.1271" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                    </a>
+                </li>
+            }
+           <li class="active"><a href="#">@ViewBag.pageId</a></li>
+            @if (ViewBag.pageId <= Model.Item2)
+            {
+                <li>
+                    <a href="/Admin/Movies?filter=@ViewBag.filter&sort=@ViewBag.sort&pageId=@(ViewBag.pageId+1)">
+                        <svg width="14" height="11" viewBox="0 0 14 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.75 5.36475L13.1992 5.36475" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M5.771 10.1271L0.749878 5.36496L5.771 0.602051" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+
+@section Scripts{ 
+    <script>
+    function DeleteMovie(id) {
+        if (id) {
+            $.ajax({
+                type: "POST",
+                url: "/Admin/DeleteMovie",
+                data: {Id:id},
+                dataType: "json",
+                success: function (res) {
+                    location.reload();
+                }
+            });
+        }
+    }
+
+    function ChengeMovieActivate(id) {
+        if (id) {
+            $.ajax({
+                type: "POST",
+                url: "/Admin/ChengeMovieActivate",
+                data: { Id: id },
+                dataType: "json",
+                success: function (res) {
+                    if (res.isActive == true) {
+                        $(`#movie-${res.id}-status`).html('');
+                        $(`#movie-${res.id}-status`).html(` <div class="main__table-text main__table-text--green">فعال است </div>`);
+                    }
+                    if (res.isActive == false) {
+                        $(`#movie-${res.id}-status`).html('');
+                        $(`#movie-${res.id}-status`).html(` <div class="main__table-text main__table-text--red">فعال نیست </div>`);
+                    }
+                }
+            });
+        }
+        }
+        $('#sort-list li').click(function (e) {
+            e.preventDefault();
+            var sort = $(this).attr('data');
+            var filterText = $('#filter').val();
+             location.href = `movies?filter=${filterText}&sort=${sort}&pageId=`+@ViewBag.pageId;
+        });
+
+        function ChangeIsSlider(id) {
+            if (id) {
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/ChengeMovieIsSliderStatus",
+                    data: { Id: id },
+                    dataType: "json",
+                    success: function (res) {
+                        if (res.isSlider == true) {
+                            $(`#movie-${res.id}-IsSlider`).html('');
+                            $(`#movie-${res.id}-IsSlider`).html(` <div class="main__table-text main__table-text--green">در اسلایدر است </div>`);
+                        }
+                        if (res.isSlider == false) {
+                            $(`#movie-${res.id}-IsSlider`).html('');
+                            $(`#movie-${res.id}-IsSlider`).html(` <div class="main__table-text main__table-text--red">در اسلایدر نیست </div>`);
+                        }
+                    }
+                });
+            }
+        }
+    </script>
+}

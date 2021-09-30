@@ -1,0 +1,120 @@
+﻿@model Flix_Tv.Application.DTOs.User.Admin.CreateUserDto
+@{
+    ViewData["Title"] = "CreateUser";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+    List<Flix_Tv.Application.DTOs.Roles.Admin.Users.GetRolesForUsersDto> Roles = ViewBag.Roles;
+}
+
+<div class="col-12">
+    <div class="main__title">
+        <h2>افزودن کاربر جدید</h2>
+    </div>
+</div>
+<!-- end main title -->
+<!-- form -->
+<div class="col-12">
+    <form asp-action="CreateUser" method="post" class="form" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-12 col-md-5 form__cover">
+                <div class="row">
+                    <div class="col-12 col-sm-6 col-md-12">
+                        <div class="form__img">
+                            <img id="form__img" src="#" alt=" ">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-7 form__content">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form__group">
+                            <input type="text" asp-for="FullName" class="form__input" placeholder="نام و نام خانوادگی">
+                            <span asp-validation-for="FullName" style="color: #ff8383; margin-top: 8px; display:block;"></span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form__group">
+                            <input type="text" class="form__input" asp-for="UserName" placeholder="نام کاربری">
+                            <span asp-validation-for="UserName" style="color: #ff8383; margin-top: 8px; display: block;"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form__group">
+                            <input type="email" class="form__input" asp-for="Email" placeholder="ایمیل">
+                            <span asp-validation-for="Email" style="color: #ff8383; margin-top: 8px; display: block;"></span>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="form__group">
+                            <input type="password" asp-for="Password" class="form__input" placeholder="رمز عبور">
+                            <span asp-validation-for="Password" style="color: #ff8383; margin-top: 8px; display: block;"></span>
+                        </div>
+                    </div>
+
+
+
+
+                    <label style="color:white">تصویر کاربر</label>
+                    <div class="col-12 form-group" style="background-color: #151f30; padding:.7rem .2rem; border-radius:6px;">
+                        <br />
+                        <input asp-for="Avatar" type="file" id="user-avatar" class="form-control" />
+                    </div>
+
+                    <div class="col-12 my-3">
+                        <div class="form-check form-check-inline">
+                            <label class="form-check-label text-white" for="materialInline1" style="font-weight:600;">نقش ها</label>
+                            <br />
+                            @foreach (var item in Roles)
+                            {
+                                <input name="selectedRoles" type="checkbox" value="@item.Id" class="form-check-input" id="materialInline1"> <span style="color:white;">@item.Title</span>
+                            <br />
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                
+            </div>
+
+
+
+            <div class="col-12">
+                <div class="row">
+
+
+                    <div class="col-12">
+                        <button type="submit" class="form__btn" style="width:100% !important;">افزودن</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- end form -->
+
+
+@section Scripts
+{
+    <script>
+        function readURL(input) {
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $('#form__img').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#user-avatar").change(function() {
+            readURL(this);
+        });
+    </script>
+    <partial name="_ValidationScriptsPartial" />
+}

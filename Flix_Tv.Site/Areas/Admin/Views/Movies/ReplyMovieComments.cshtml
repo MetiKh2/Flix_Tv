@@ -1,0 +1,105 @@
+﻿@model List<Flix_Tv.Application.DTOs.MovieComment.Site.ShowMovieCommentDto> 
+@{
+    ViewData["Title"] = "ReplyMovieComments";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<main class="main" style=" padding: 0px 0px 30px 15px;">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- main title -->
+            <div class="col-12">
+                <div class="main__title">
+                    <h2>نظر ها</h2>
+
+                    @*<span class="main__title-stat">تعداد @Model.Item3</span>*@
+
+                     
+                </div>
+            </div>
+            <!-- end main title -->
+            <!-- comments -->
+            <div class="col-12">
+                <div class="main__table-wrap">
+                    <table class="main__table">
+                        <thead>
+                            <tr>
+                                <th>تصویر</th>
+                                <th>عنوان</th>
+                                <th>نویسنده</th>
+                                <th>امتیاز</th>
+                                <th>متن</th>
+                                <th>تاریخ ایجاد شده</th>
+                                <th>اقدامات</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="main__table-text">  <img style="height:30px;width:60px;" src="~/Users/ThumbImages/@item.UserImage" /></div>
+                                    </td>
+                                    <td>
+                                        <div class="main__table-text"><a href="#">@item.Subject</a></div>
+                                    </td>
+                                    <td>
+                                        <div class="main__table-text">@item.UserName</div>
+                                    </td>
+                                    <td>
+                                        <div class="main__table-text">@((item.Rate!=null?item.Rate:"NULL"))</div>
+                                    </td>
+                                    <td>
+                                        <div class="main__table-text" style="overflow:hidden">@((item.Text.Length<20?item.Text: item.Text.Substring(0, 20))) ...</div>
+                                    </td>
+
+                                    <td>
+                                        <div class="main__table-text">@item.CreateDate</div>
+                                    </td>
+                                    <td>
+                                        <div class="main__table-btns">
+                                            <a onclick="ShowText(`@item.Text`)" class="main__table-btn main__table-btn--view open-modal">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.92,11.6C19.9,6.91,16.1,4,12,4S4.1,6.91,2.08,11.6a1,1,0,0,0,0,.8C4.1,17.09,7.9,20,12,20s7.9-2.91,9.92-7.6A1,1,0,0,0,21.92,11.6ZM12,18c-3.17,0-6.17-2.29-7.9-6C5.83,8.29,8.83,6,12,6s6.17,2.29,7.9,6C18.17,15.71,15.17,18,12,18ZM12,8a4,4,0,1,0,4,4A4,4,0,0,0,12,8Zm0,6a2,2,0,1,1,2-2A2,2,0,0,1,12,14Z"></path></svg>
+                                            </a>
+                                            
+                                            <a onclick="DeleteMovieComment(@item.Id)" class="main__table-btn main__table-btn--delete open-modal">
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10,18a1,1,0,0,0,1-1V11a1,1,0,0,0-2,0v6A1,1,0,0,0,10,18ZM20,6H16V5a3,3,0,0,0-3-3H11A3,3,0,0,0,8,5V6H4A1,1,0,0,0,4,8H5V19a3,3,0,0,0,3,3h8a3,3,0,0,0,3-3V8h1a1,1,0,0,0,0-2ZM10,5a1,1,0,0,1,1-1h2a1,1,0,0,1,1,1V6H10Zm7,14a1,1,0,0,1-1,1H8a1,1,0,0,1-1-1V8H17Zm-3-1a1,1,0,0,0,1-1V11a1,1,0,0,0-2,0v6A1,1,0,0,0,14,18Z"></path></svg>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- end comments -->
+            <!-- paginator -->
+              
+            <!-- end paginator -->
+        </div>
+    </div>
+</main>
+
+@section Scripts{
+    <script>
+    function ShowText(text) {
+        alert(text);
+    }
+        function DeleteMovieComment(id) {
+        $.ajax({
+            type: "POST",
+            url: "/DeleteMovieComment",
+            data: {id:id},
+            dataType: "json",
+            success: function (response) {
+                location.reload();
+            }
+        });
+    }
+    </script>
+}

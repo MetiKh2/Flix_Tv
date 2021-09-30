@@ -1,0 +1,33 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>CheckMovieFile</title>
+    <style>
+        video {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            bottom: 0px;
+            left: 0px;
+            max-height: 100%;
+            max-width: 100%;
+            margin: auto;
+        }
+
+        body {
+            background-color: rgb(0, 0, 0);
+        }
+    </style>
+</head>
+<body>
+    <video controls="" controlsList="nodownload" autoplay="" name="media"><source src="https://localhost:44308/Movies/Files/@ViewBag.quality/@ViewBag.fileName" type="video/mp4"></video>
+</body>
+</html>

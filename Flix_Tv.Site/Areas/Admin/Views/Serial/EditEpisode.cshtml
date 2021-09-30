@@ -1,0 +1,113 @@
+﻿@model Flix_Tv.Application.DTOs.SerialEpisode.Admin.EditSerialEpisodeDto 
+@{
+    ViewData["Title"] = "EditEpisode";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="col-12">
+    <div class="main__title">
+        <h2> افزودن قسمت جدید فصل : @ViewBag.seasonName سریال : @ViewBag.serialName</h2>
+
+    </div>
+</div>
+<!-- end main title -->
+<!-- form -->
+<div class="col-12">
+    <form action="/Admin/EditEpisode" method="post" class="form" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col-12 col-md-5 form__cover">
+                <div class="row">
+                    <div class="col-12 col-sm-6 col-md-12">
+                        <div class="form__img">
+                            <img id="form__img" src="~/Serials/Episodes/Images/@Model.LastImage" alt=" ">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="SeasonId" />
+            <div class="col-12 col-md-7 form__content">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form__group">
+                            <input type="text" asp-for="Title" class="form__input" placeholder="عنوان">
+                            <span asp-validation-for="Title" style="color: #ff8383; margin-top: 8px; display:block;"></span>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+                    <div class="col-12">
+                        <div class="form__group">
+                            <label style="color:#fff;">شرح</label>
+                            <textarea asp-for="Description" class="form__input" rows="6" cols="10"></textarea>
+                            <span asp-validation-for="Description" style="color: #ff8383; margin-top: 8px; display: block;"></span>
+                        </div>
+                    </div>
+
+
+
+
+                    <label style="color:white">تصویر فیلم</label>
+                    <div class="col-12 form-group" style="background-color: #151f30; padding:.7rem .2rem; border-radius:6px;">
+                        <br />
+                        <input asp-for="Image" type="file" id="movie-img" class="form-control" />
+                    </div>
+
+
+
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="col-12">
+                <div class="row">
+
+
+                    <div class="col-12">
+                        <button type="submit" class="form__btn" style="width:100% !important;">افزودن</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- end form -->
+
+
+@section Scripts
+{
+    <script>
+        function readURL(input) {
+
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+                    $('#form__img').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#movie-img").change(function() {
+            readURL(this);
+        });
+    </script>
+    <partial name="_ValidationScriptsPartial" />
+}
+
+
+

@@ -1,0 +1,241 @@
+﻿@model Tuple<List<Flix_Tv.Application.DTOs.MovieCategory.Admin.GetMovieCategoriesDto>, int,int>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="col-12">
+    <div class="main__title">
+        <h2>ژانر های فیلم</h2>
+
+        <span class="main__title-stat">تعداد @Model.Item3 </span>
+
+        <div class="main__title-wrap">
+            <button data-toggle="modal" data-target="#exampleModalLong" class="btn btn-info ml-4">افزودن ژانر فیلم جدید</button>
+            <!-- filter sort -->
+            <!-- end filter sort -->
+            <!-- search -->
+            <form asp-action="Index" class="main__title-form">
+                <input type="hidden" name="sort" value="ViewBag.sort" />
+                <input name="filter" value="@ViewBag.filter" id="input-filter" type="text" placeholder="دنبال ژانر . .">
+                <button type="submit">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="8.25998" cy="8.25995" r="7.48191" stroke="#2F80ED" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></circle><path d="M13.4637 13.8523L16.3971 16.778" stroke="#2F80ED" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                </button>
+            </form>
+            <!-- end search -->
+        </div>
+    </div>
+</div>
+<!-- end main title -->
+<!-- users -->
+<div class="col-12">
+    <div class="main__table-wrap">
+        <table class="main__table">
+            <thead>
+                <tr>
+
+                    <th>تصویر  </th>
+                    <th>نام ژانر </th>
+                    <th>تاریخ </th>
+
+                    <th> دستورات </th>
+
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @foreach (var item in Model.Item1)
+                {
+                    <tr>
+                        <td>
+                            <div class="main__user">
+                                <div class="main__avatar">
+                                    <img src="~/Movies/Categories/ThumbImages/@item.Image" width="100" alt="">
+                                </div>
+
+                            </div>
+                        </td>
+                        <td>
+                            <div class="main__table-text">@item.Title</div>
+                        </td>
+                        <td>
+                            <div class="main__table-text">@item.DateTime</div>
+                        </td>
+
+                        <td>
+                            <div class="main__table-btns">
+                                <a onclick="ChangeStatus(@item.Id)" class="main__table-btn main__table-btn--banned open-modal">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,13a1.49,1.49,0,0,0-1,2.61V17a1,1,0,0,0,2,0V15.61A1.49,1.49,0,0,0,12,13Zm5-4V7A5,5,0,0,0,7,7V9a3,3,0,0,0-3,3v7a3,3,0,0,0,3,3H17a3,3,0,0,0,3-3V12A3,3,0,0,0,17,9ZM9,7a3,3,0,0,1,6,0V9H9Zm9,12a1,1,0,0,1-1,1H7a1,1,0,0,1-1-1V12a1,1,0,0,1,1-1H17a1,1,0,0,1,1,1Z"></path></svg>
+                                </a>
+                                <a href="/Admin/EditMovieCategory/@item.Id" class="main__table-btn main__table-btn--edit">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22,7.24a1,1,0,0,0-.29-.71L17.47,2.29A1,1,0,0,0,16.76,2a1,1,0,0,0-.71.29L13.22,5.12h0L2.29,16.05a1,1,0,0,0-.29.71V21a1,1,0,0,0,1,1H7.24A1,1,0,0,0,8,21.71L18.87,10.78h0L21.71,8a1.19,1.19,0,0,0,.22-.33,1,1,0,0,0,0-.24.7.7,0,0,0,0-.14ZM6.83,20H4V17.17l9.93-9.93,2.83,2.83ZM18.17,8.66,15.34,5.83l1.42-1.41,2.82,2.82Z"></path></svg>
+                                </a>
+                                <button onclick="DeleteMovieCategory(@item.Id)" class="main__table-btn main__table-btn--delete open-modal">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10,18a1,1,0,0,0,1-1V11a1,1,0,0,0-2,0v6A1,1,0,0,0,10,18ZM20,6H16V5a3,3,0,0,0-3-3H11A3,3,0,0,0,8,5V6H4A1,1,0,0,0,4,8H5V19a3,3,0,0,0,3,3h8a3,3,0,0,0,3-3V8h1a1,1,0,0,0,0-2ZM10,5a1,1,0,0,1,1-1h2a1,1,0,0,1,1,1V6H10Zm7,14a1,1,0,0,1-1,1H8a1,1,0,0,1-1-1V8H17Zm-3-1a1,1,0,0,0,1-1V11a1,1,0,0,0-2,0v6A1,1,0,0,0,14,18Z"></path></svg>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- paginator -->
+<div class="col-12">
+    <div class="paginator">
+        <span class="paginator__pages">10 از 7,545</span>
+
+        <ul class="paginator__paginator">
+            @if (ViewBag.pageId > 1)
+            {
+                <li>
+                    <a href="/Admin/MovieCategories?filter=@ViewBag.filter&pageId=@(ViewBag.pageId-1)">
+                        <svg width="14" height="11" viewBox="0 0 14 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M13.1992 5.3645L0.75 5.3645" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M8.17822 0.602051L13.1993 5.36417L8.17822 10.1271" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                    </a>
+                </li>
+            }
+            @*<li @((ViewBag.pageId == 1) ? "active" : "")><a href="/Admin/Users?filter=@ViewBag.filter&sort=@ViewBag.sort&pageId=1">1</a></li>
+                @for (int i = ViewBag.pageId; i <= 4; i++)
+                {
+                    <li @((i == ViewBag.pageId) ? "active" : "")><a href="/Admin/Users?filter=@ViewBag.filter&sort=@ViewBag.sort&pageId=@i">@i</a></li>
+                }
+                <li @((ViewBag.pageId == Model.Item2) ? "active" : "")><a href="/Admin/Users?filter=@ViewBag.filter&sort=@ViewBag.sort&pageId=@Model.Item2">@Model.Item2</a></li>*@
+            <li class="active"><a href="#">@ViewBag.pageId</a></li>
+            @if (ViewBag.pageId <= Model.Item2)
+            {
+                <li>
+                    <a href="/Admin/MovieCategories?filter=@ViewBag.filter&pageId=@(ViewBag.pageId+1)">
+                        <svg width="14" height="11" viewBox="0 0 14 11" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0.75 5.36475L13.1992 5.36475" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M5.771 10.1271L0.749878 5.36496L5.771 0.602051" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+
+                    </a>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
+<!-- end paginator -->
+
+<div style="position:absolute;top:30px;right:0;margin:auto; padding:0 !important;overflow:visible;" class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle"> افزودن نقش جدید</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">نام ژانر</label>
+                        <input name="categoryName" type="text" class="form-control" id="create-movie-category-title">
+                        <p id="movie-category-title-empty" class="d-none mb-2" style="color:#ff0000">نام ژانر را وارد کنید</p>
+                        <p id="movie-category-title-length-error" class="d-none" style="color:#ff0000">نام ژانر نباید بیشتر از 50 حرف باشد</p>
+                        <br />
+                        <input type="file" class="form-control" id="create-movie-category-image">
+                    </div>
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">بستن</button>
+                <button id="create-movie-category" type="button" class="btn btn-primary">ذخیره </button>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        $('#create-movie-category').click(function (e) {
+            e.preventDefault();
+            var categoryName = $('#create-movie-category-title').val();
+            var categoryImage = $('#create-movie-category-image')[0].files[0];
+            if (categoryName == "" || categoryName === "") {
+                $('#movie-category-title-empty').removeClass('d-none');
+                return;
+            }
+            if (categoryName.length > 50) {
+
+                $('#movie-category-title-length-error').removeClass('d-none');
+                return;
+            }
+
+            var formData = new FormData();
+            formData.append("categoryName", categoryName);
+            formData.append("categoryImage", categoryImage);
+            $.ajax({
+                type: "POST",
+                url: "/Admin/CreateMovieCategory",
+                data: formData,
+                dataType: "json",
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (res) {
+                    if (res === false) {
+                        alert('خطایی به وجود آمده');
+                    }
+                    else if (res.title) {
+                        $('.main__table tbody').prepend(`<tr>
+                     <td>
+                            <div class="main__user">
+                                <div class="main__avatar">
+                                    <img src="/Movies/Categories/ThumbImages/${res.imageName}" width="100" alt="">
+                                </div>
+
+                            </div>
+                        </td>
+                        <td>
+                            <div class="main__table-text">${res.title}</div>
+                        </td>
+                        <td>
+                            <div class="main__table-text">${res.craeteDate}</div>
+                        </td>
+
+                        <td>
+                            <div class="main__table-btns">
+                                <a onclick="ChangeStatus(${res.id})" class="main__table-btn main__table-btn--banned open-modal">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12,13a1.49,1.49,0,0,0-1,2.61V17a1,1,0,0,0,2,0V15.61A1.49,1.49,0,0,0,12,13Zm5-4V7A5,5,0,0,0,7,7V9a3,3,0,0,0-3,3v7a3,3,0,0,0,3,3H17a3,3,0,0,0,3-3V12A3,3,0,0,0,17,9ZM9,7a3,3,0,0,1,6,0V9H9Zm9,12a1,1,0,0,1-1,1H7a1,1,0,0,1-1-1V12a1,1,0,0,1,1-1H17a1,1,0,0,1,1,1Z"></path></svg>
+                                </a>
+                                <a href="/Admin/EditMovieCategory/${res.id}" class="main__table-btn main__table-btn--edit">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22,7.24a1,1,0,0,0-.29-.71L17.47,2.29A1,1,0,0,0,16.76,2a1,1,0,0,0-.71.29L13.22,5.12h0L2.29,16.05a1,1,0,0,0-.29.71V21a1,1,0,0,0,1,1H7.24A1,1,0,0,0,8,21.71L18.87,10.78h0L21.71,8a1.19,1.19,0,0,0,.22-.33,1,1,0,0,0,0-.24.7.7,0,0,0,0-.14ZM6.83,20H4V17.17l9.93-9.93,2.83,2.83ZM18.17,8.66,15.34,5.83l1.42-1.41,2.82,2.82Z"></path></svg>
+                                </a>
+                                <button onclick="DeleteMovieCategory(${res.id})" class="main__table-btn main__table-btn--delete open-modal">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10,18a1,1,0,0,0,1-1V11a1,1,0,0,0-2,0v6A1,1,0,0,0,10,18ZM20,6H16V5a3,3,0,0,0-3-3H11A3,3,0,0,0,8,5V6H4A1,1,0,0,0,4,8H5V19a3,3,0,0,0,3,3h8a3,3,0,0,0,3-3V8h1a1,1,0,0,0,0-2ZM10,5a1,1,0,0,1,1-1h2a1,1,0,0,1,1,1V6H10Zm7,14a1,1,0,0,1-1,1H8a1,1,0,0,1-1-1V8H17Zm-3-1a1,1,0,0,0,1-1V11a1,1,0,0,0-2,0v6A1,1,0,0,0,14,18Z"></path></svg>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>`);
+                    }
+                }
+            });
+
+        });
+
+
+        function DeleteMovieCategory(id) {
+            if (id) {
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/DeleteMovieCategory",
+                    data: { Id: id },
+                    dataType: "json",
+                    success: function (response) {
+                        if (response === false) {
+                            alert('خطایی به وجود آمده است');
+                        }
+                        else {
+                            location.reload();
+                        }
+                    }
+                });
+            }
+        }
+
+
+    </script>
+}

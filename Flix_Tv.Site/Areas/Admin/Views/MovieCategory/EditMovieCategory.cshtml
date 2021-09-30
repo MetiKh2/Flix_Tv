@@ -1,0 +1,84 @@
+﻿@model Flix_Tv.Application.DTOs.MovieCategory.Admin.Edit.MovieCategoryForEditDto
+@{
+    ViewData["Title"] = "EditMovieCategory";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="col-12">
+    <div class="main__title">
+        <h2>ویرایش نقش @Model.Title</h2>
+    </div>
+</div>
+<!-- end main title -->
+<!-- form -->
+<div class="col-12">
+    <form action="/Admin/EditMovieCategory" method="post" class="form" enctype="multipart/form-data">
+
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="ImageName" />
+
+        <div class="row">
+
+            <div class="col-12 col-md-5 form__cover">
+                <div class="row">
+                    <div class="col-12 col-sm-6 col-md-12">
+                        <div class="form__img">
+                            <img id="form__img" src="~/Movies/Categories/Images/@Model.ImageName" alt=" ">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-7 form__content">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="form__group">
+                            <input type="text" asp-for="Title" class="form__input" placeholder="نام ژانر">
+                            <span asp-validation-for="Title" style="color: #ff8383; margin-top: 8px; display:block;"></span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form__group">
+                            <label style="color:#fff;">تصویر ژانر</label>
+                            <input type="file" name="image" id="new-image" class="form__input">
+                        </div>
+                    </div>
+
+
+                    <div class="col-12">
+                        <div class="row">
+
+
+                            <div class="col-12">
+                                <button type="submit" class="form__btn">ویرایش</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- end form -->
+
+@section Scripts
+{
+  <script>
+      function readURL(input) {
+
+          if (input.files && input.files[0]) {
+              var reader = new FileReader();
+
+              reader.onload = function (e) {
+                  $('#form__img').attr('src', e.target.result);
+              }
+
+              reader.readAsDataURL(input.files[0]);
+          }
+      }
+
+      $("#new-image").change(function () {
+          readURL(this);
+      });
+  </script>
+    <partial name="_ValidationScriptsPartial" />
+}

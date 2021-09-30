@@ -1,0 +1,117 @@
+﻿
+@{
+    ViewData["Title"] = "SerialEpisodes";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="col-12">
+    <div class="main__title">
+        <h2>قسمت های سریال @ViewBag.serialName فصل : @ViewBag.seasonName </h2>
+
+        <span class="main__title-stat">تعداد @Model.Count</span>
+
+        <div class="main__title-wrap">
+            <a class="btn btn-info ml-4" href="/Admin/CreateEpisode/@ViewBag.seasonId">افزودن قسمت جدید</a>
+
+        </div>
+    </div>
+</div>
+
+<div class="col-12">
+    <div class="main__table-wrap">
+        <table class="main__table">
+            <thead>
+                <tr>
+
+                    <th>تصویر</th>
+                    <th>عنوان</th>
+                    <th>تاریخ ایجاد شده</th>
+
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <div class="main__user">
+                                <div class="main__avatar">
+                                    <img src="~/Serials/Episodes/ThumbImages/@item.Image" alt="">
+                                </div>
+
+                            </div>
+                        </td>
+                        <td>
+                            <div class="main__table-text"><a href="#">@item.Title</a></div>
+                        </td>
+                        <td>
+                            <div class="main__table-text"><a href="#">@item.CreateDate</a></div>
+                        </td>
+
+                        <td>
+
+                            <div class="main__table-btns">
+                                <a href="/Admin/CreateSerialEpisodeFile/@item.Id" class="main__table-btn main__table-btn--banned opend-modal">
+                                    <i class="fa fa-file" style="color:green;"></i>
+                                </a>
+
+                                <a href="/Admin/EditEpisode/@item.Id" class="main__table-btn main__table-btn--edit">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M22,7.24a1,1,0,0,0-.29-.71L17.47,2.29A1,1,0,0,0,16.76,2a1,1,0,0,0-.71.29L13.22,5.12h0L2.29,16.05a1,1,0,0,0-.29.71V21a1,1,0,0,0,1,1H7.24A1,1,0,0,0,8,21.71L18.87,10.78h0L21.71,8a1.19,1.19,0,0,0,.22-.33,1,1,0,0,0,0-.24.7.7,0,0,0,0-.14ZM6.83,20H4V17.17l9.93-9.93,2.83,2.83ZM18.17,8.66,15.34,5.83l1.42-1.41,2.82,2.82Z"></path></svg>
+                                </a>
+                                <a href="/admin/episodeComments/@item.Id" class="main__table-btn main__table-btn--banned opend-mondal">
+                                    <i class="fa fa-comment" style="color: #b38768;"></i>
+                                </a>
+                                <button style="cursor:pointer;" onclick="DeleteEpisode(@item.Id)" class="main__table-btn main__table-btn--delete odpen-modal">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10,18a1,1,0,0,0,1-1V11a1,1,0,0,0-2,0v6A1,1,0,0,0,10,18ZM20,6H16V5a3,3,0,0,0-3-3H11A3,3,0,0,0,8,5V6H4A1,1,0,0,0,4,8H5V19a3,3,0,0,0,3,3h8a3,3,0,0,0,3-3V8h1a1,1,0,0,0,0-2ZM10,5a1,1,0,0,1,1-1h2a1,1,0,0,1,1,1V6H10Zm7,14a1,1,0,0,1-1,1H8a1,1,0,0,1-1-1V8H17Zm-3-1a1,1,0,0,0,1-1V11a1,1,0,0,0-2,0v6A1,1,0,0,0,14,18Z"></path></svg>
+                                </button>
+                                <a href="/Admin/getEpisodeFile/@item.Id?quality=240" class="main__table-btn main__table-btn--banned opend-modal">
+                                    <p class="text-sm-center" style="color:gold;">240p</p>
+                                </a>
+                                <a href="/Admin/getEpisodeFile/@item.Id?quality=360" class="main__table-btn main__table-btn--banned opend-modal">
+                                    <p class="text-sm-center" style="color:gold;">360p</p>
+                                </a>
+                                <a href="/Admin/getEpisodeFile/@item.Id?quality=480" class="main__table-btn main__table-btn--banned opend-modal">
+                                    <p class="text-sm-center" style="color:gold;">480p</p>
+                                </a>
+                                <a href="/Admin/getEpisodeFile/@item.Id?quality=720" class="main__table-btn main__table-btn--banned opend-modal">
+                                    <p class="text-sm-center" style="color:gold;">720p</p>
+                                </a>
+                                <a href="/Admin/getEpisodeFile/@item.Id?quality=1080" class="main__table-btn main__table-btn--banned opend-modal">
+                                    <p class="text-sm-center" style="color:gold;">1080p</p>
+                                </a>
+                                <a href="/Admin/getEpisodeFile/@item.Id?quality=4000" class="main__table-btn main__table-btn--banned opend-modal">
+                                    <p class="text-sm-center" style="color:gold;">4k</p>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+@section Scripts{
+    <script>
+
+        function DeleteEpisode(id) {
+            if (id) {
+                $.ajax({
+                    type: "POST",
+                    url: "/Admin/DeleteEpisode",
+                    data: { Id: id },
+                    dataType: "json",
+                    success: function (res) {
+                        location.reload();
+                    }
+                });
+            }
+        }
+    </script>
+}
+
