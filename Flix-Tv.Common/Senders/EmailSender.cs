@@ -24,7 +24,7 @@ namespace Flix_Tv.Common.Senders
             // mail.Attachments.Add(attachment);
 
             SmtpServer.Port = 587;
-            SmtpServer.Credentials = new System.Net.NetworkCredential("mahdikhodarahimi0@gmail.com", "12212332");
+            SmtpServer.Credentials = new System.Net.NetworkCredential("mahdikhodarahimi0@gmail.com", "password");
             SmtpServer.EnableSsl = true;
 
             SmtpServer.Send(mail);
